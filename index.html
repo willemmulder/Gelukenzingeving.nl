@@ -5,6 +5,26 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			#main .button.primary {
+				background-color: #7a67ab !important;
+				color: #ffffff !important;
+				box-shadow: none;
+			}
+			#main .button.primary:hover {
+				background-color: #675498 !important;
+			}
+			#main .button.primary:active {
+				background-color: #675498 !important;
+			}
+			#main > .main {
+				padding: 3em 3em 3em 3em;
+				border-top: solid 1px #dddddd;
+			}
+			#main > .main > :last-child {
+				margin-bottom: 0px;
+			}
+		</style>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -13,8 +33,8 @@
 			<div id="wrapper">
 
 				<!-- Header -->
-					<header id="header" class="alt">
-						<h1>"Geluk en zingeving"</h1>
+					<header id="header">
+						<h1>Geluk en zingeving</h1>
 						<p>Een interactieve avond waar je misschien wel iets aan hebt</p>
 					</header>
 
@@ -94,24 +114,31 @@
 								<header class="major">
 									<h2>Waar?</h2>
 								</header>
-								<p class="">
-									De avond vindt plaats in Cultureel Centrum Cascade in Hendrik-Ido-Ambacht.
-								</p>
-								<p>
-									Het adres is:<br />
-									Hoge Kade 50<br />
-									3341 BE, Hendrik-Ido-Ambacht
-								</p>
-								<p>
-									Tegenover Cascade is een groot aantal gratis parkeerplaatsen beschikbaar.
-								</p>
+								<div class="row gtr-uniform">
+									<div class="col-6 col-12-small">
+										<p>
+											De avond vindt plaats in Cultureel Centrum Cascade in Hendrik-Ido-Ambacht.
+										</p>
+										<p>
+											Het adres is:<br />
+											Hoge Kade 50<br />
+											3341 BE, Hendrik-Ido-Ambacht
+										</p>
+										<p>
+											Tegenover Cascade is een groot aantal gratis parkeerplaatsen beschikbaar.
+										</p>
+									</div>
+									<div class="col-6 col-12-small">
+											<iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=4.629653692245484%2C51.84215468262502%2C4.647570848464967%2C51.84768259330551&amp;layer=mapnik&amp;marker=51.8449187228204%2C4.638612270355225" style="border: 1px solid black"></iframe>
+											<br/><small><a href="https://www.openstreetmap.org/?mlat=51.84492&amp;mlon=4.63861#map=17/51.84492/4.63861" target="_blank">Grotere kaart bekijken</a></small>
+									</div>
+								</div>
 							</section>
 
 						<!-- Wie -->
 							<section id="wie" class="main">
 								<header class="major">
 									<h2>Wie?</h2>
-									<p>Willem Mulder</p>
 								</header>
 								<p>
 									Willem Mulder groeide op in Apeldoorn, wilde altijd uitvinder worden, en studeerde Natuurwetenschap & Innovatiemanagement aan de Universiteit Utrecht.
@@ -120,7 +147,7 @@
 									Na zijn studie werkte hij bij Capgemini, waar hij zich naast IT ook bezighield met gamification en intrinsieke motivatie op de werkvloer.
 								</p>
 								<p>
-									Willem is mede-eigenaar van <a href='http://preekondertiteling.nl/'>Preekondertiteling</a> en <a href='http://growteq.nl/'>Growteq</a>.
+									Willem is mede-eigenaar van <a href='http://growteq.nl/'>Growteq</a> en <a href='http://preekondertiteling.nl/'>Preekondertiteling</a>.
 								</p>
 								<p>
 									Daarnaast focust hij zich op het schrijven van een boek, maakt hij apps en deelt graag zijn theorie over geluk en zingeving.
