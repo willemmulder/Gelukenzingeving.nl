@@ -3198,7 +3198,7 @@ input, select, textarea {
 		color: #636363;
 		position: absolute;
 		width: 64em;
-		max-width: calc(100% - 4em);
+		max-width: 100%;
 		padding: 1em;
 		background-color: #f7f7f7;
 		border-top-left-radius: 0.25em;
@@ -3301,12 +3301,8 @@ input, select, textarea {
 		@media screen and (max-width: 736px) {
 
 			#nav {
-				display: none;
+				max-width: 100%;
 			}
-
-				#nav + #main {
-					padding-top: 0;
-				}
 
 		}
 
@@ -3745,6 +3741,7 @@ input, select, textarea {
 		width: 64em;
 		max-width: calc(100% - 4em);
 		margin: 0 auto;
+		position: relative;
 	}
 
 		@media screen and (max-width: 480px) {
