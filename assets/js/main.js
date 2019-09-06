@@ -44,7 +44,13 @@
 						},
 					});
 
-			// Links.
+			// Page links
+			$('a').not($nav.find('a')).scrolly({
+				speed: 1000,
+				offset: function() { return $nav.height(); }
+			});
+
+			// Navigation links.
 				var $nav_a = $nav.find('a');
 
 				$nav_a
@@ -73,9 +79,13 @@
 					})
 					.each(function() {
 
-						var	$this = $(this),
-							id = $this.attr('href'),
-							$section = $(id);
+						var	$this = $(this);
+						var id = $this.attr('href');
+
+						// No link in the format of #something? Bail.
+						if (id.indexOf('#') !== 0) 
+							return;	
+						$section = $(id);
 
 						// No section for this link? Bail.
 							if ($section.length < 1)
