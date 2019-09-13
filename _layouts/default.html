@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>{{site.title}}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			#main .button.primary {
+				background-color: #7a67ab !important;
+				color: #ffffff !important;
+				box-shadow: none;
+			}
+			#main .button.primary:hover {
+				background-color: #675498 !important;
+			}
+			#main .button.primary:active {
+				background-color: #675498 !important;
+			}
+			#main > .main {
+				padding: 3em 3em 3em 3em;
+				border-top: solid 1px #dddddd;
+			}
+			#main > .main > :last-child {
+				margin-bottom: 0px;
+			}
+			form {
+				margin: 0px;
+			}
+		</style>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-258109-21"></script>
+		<script>
+		    window.dataLayer = window.dataLayer || [];
+		    function gtag(){dataLayer.push(arguments);}
+		    gtag('js', new Date());
+		    gtag('config', 'UA-258109-21');
+		</script>
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<small></small>
+						<h1>{{site.title}}</h1>
+						<p>Naar een gelukkiger samenleving</p>
+					</header>
+
+				<!-- Nav -->
+				<nav id="nav">
+						<ul>
+							{% for navigationpage in site.navigation %}
+								{% if page.url == navigationpage.url %}
+									<li><a href="{{navigationpage.url}}" class="active">{{navigationpage.label}}</a></li>
+								{% else %}
+									<li><a href="{{navigationpage.url}}">{{navigationpage.label}}</a></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						{{ content }}
+					
+					</div>
+
+				<!-- Footer -->
+				<footer id="footer">
+						<section>
+							<h2>Geluk en zingeving</h2>
+							<p>
+								Naar een gelukkiger samenleving voor iedereen. 
+							</p>
+						</section>
+						<section>
+							<h2>Contact</h2>
+							<p>
+								Via de <a href='contact'>contactpagina</a> of onderstaande sociale media.
+							</p>
+							<ul class="icons">
+								<li><a href="https://twitter.com/willemmulder" target="_blank" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
+								<li><a <a href="https://www.facebook.com/willemmulderr" target="_blank" class="icon fa-facebook alt"><span class="label">Facebook</span></a></li>
+							</ul>
+						</section>
+						<p class="copyright">Ontwerp: <a href="https://html5up.net" target="_blank">HTML5 UP</a></p>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+	</body>
+</html>

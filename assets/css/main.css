@@ -1,5 +1,6 @@
 @import url(font-awesome.min.css);
-@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400";
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
 
 /*
 	Stellar by HTML5 UP
@@ -194,6 +195,7 @@ input, select, textarea {
 		}
 
 	h1, h2, h3, h4, h5, h6 {
+		font-family: 'Amatic SC', cursive;
 		font-weight: 300;
 		line-height: 1.5;
 		margin: 0 0 0.7em 0;
