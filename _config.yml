@@ -40,9 +40,13 @@ navigation:
 - label: Contact
   url: /contact
 
+excerpt_separator: <!--more-->
+words_per_minute: 180
+
 # Build settings
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 # Exclude from processing.
 # The following items will not be processed, by default.
