@@ -73,6 +73,10 @@ input, select, textarea {
 	appearance: none;
 }
 
+small {
+	font-size: 70%;
+}
+
 /* Basic */
 
 	@-ms-viewport {
@@ -289,7 +293,7 @@ input, select, textarea {
 	}
 
 		hr.major {
-			margin: 3em 0;
+			margin: 2em 0;
 		}
 
 	.align-left {
@@ -2618,7 +2622,7 @@ input, select, textarea {
 	}
 
 	header.major {
-		margin-bottom: 3em;
+		margin-bottom: 2em;
 	}
 
 		header.major h2 {
