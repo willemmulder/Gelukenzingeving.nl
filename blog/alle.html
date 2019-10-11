@@ -1,0 +1,60 @@
+---
+layout: page
+title: Alle blogs
+permalink: /blog/alle
+---
+
+<!-- Introduction -->
+<section id="blogs">
+    <div class="content">
+        <header class="major">
+            <h2>Alle blogs</h2>
+        </header>
+        {% for post in site.posts %}
+            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+            <p>
+                <small>
+                    
+                    {{ post.date | date_to_string }} - 
+                    {{ post.author }} - 
+
+                    {% assign readTime = post.content | strip_html | number_of_words | divided_by:site.words_per_minute | round %}
+                    {% if readTime == 0 %}
+                    {% assign readTimeText = "Minder dan één" %}
+                    {% elsif readTime == 1 %}
+                    {% assign readTimeText = "Één" %}
+                    {% elsif readTime == 2 %}
+                    {% assign readTimeText = "Twee" %}
+                    {% elsif readTime == 3 %}
+                    {% assign readTimeText = "Drie" %}
+                    {% elsif readTime == 4 %}
+                    {% assign readTimeText = "Vier" %}
+                    {% elsif readTime == 5 %}
+                    {% assign readTimeText = "Vijf" %}
+                    {% elsif readTime == 6 %}
+                        {% assign readTimeText = "Zes" %}
+                    {% elsif readTime == 7 %}
+                    {% assign readTimeText = "Zeven" %}
+                    {% elsif readTime == 8 %}
+                    {% assign readTimeText = "Acht" %}
+                    {% elsif readTime == 9 %}
+                    {% assign readTimeText = "Negen" %}
+                    {% else %}
+                    {% assign readTimeText = readTime %}
+                    {% endif %}
+
+                    {% if readTime <= 1 %}
+                    {{readTimeText}} minuut lezen
+                    {% else %}
+                    {{readTimeText}} minuten lezen
+                    {% endif %}
+                    
+                </small>
+            </p>
+            <p>
+                {{ post.excerpt | markdownify | strip_html }}
+                <a href="{{post.url}}">verder lezen...</a>     
+            </p>
+        {% endfor %}
+    </div>
+</section>

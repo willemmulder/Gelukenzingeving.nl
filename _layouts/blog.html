@@ -1,0 +1,27 @@
+---
+layout: default
+---
+
+<section id="blog" class="main">
+
+    <!-- Introduction -->
+    <section id="intro">
+        <div class="content">
+            <header class="major">
+                <h2>{{page.title}}</h2>
+                <p>
+                    
+                    {% include date.html date=page.date %} - 
+                    {{ page.author }} - 
+                    {% include readtime.html text=page.content %}
+                    
+                </p>
+            </header>
+        </div>
+    </section>
+
+    <section>
+        {{ content }}
+    </section>
+
+</section>
