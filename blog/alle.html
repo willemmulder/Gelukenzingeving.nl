@@ -15,7 +15,7 @@ permalink: /blog/alle
             <p>
                 <small>
                     
-                    {{ post.date | date_to_string }} - 
+                    {% include date.html date=post.date %} - 
                     {{ post.author }} - 
 
                     {% assign readTime = post.content | strip_html | number_of_words | divided_by:site.words_per_minute | round %}
