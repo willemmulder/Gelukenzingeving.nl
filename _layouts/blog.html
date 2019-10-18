@@ -14,6 +14,14 @@ layout: default
                     {% include date.html date=page.date %} - 
                     {{ page.author }} - 
                     {% include readtime.html text=page.content %}
+
+                    <span style='float: right;'>
+                        <small>
+                            Delen op 
+                            <a target="_blank" class='icon fa-facebook' href='https://www.facebook.com/sharer/sharer.php?u={{page.url | absolute_url | uri_escape}}'>&nbsp;</a>
+                            <a target="_blank" class='icon fa-twitter' href='https://twitter.com/intent/tweet?text={{page.title | uri_escape}}&url={{page.url | absolute_url | uri_escape}}&via=willemmulder&original_referer={{page.url | absolute_url | uri_escape}}'>&nbsp;</a>
+                        </small>
+                    </span>
                     
                 </p>
             </header>
