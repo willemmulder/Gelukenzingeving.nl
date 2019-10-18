@@ -35,6 +35,8 @@ navigation:
   url: /wij
 - label: Lezingen
   url: /lezingen
+- label: Blog
+  url: /blog
 - label: Boek
   url: /boek
 - label: Contact
@@ -42,6 +44,7 @@ navigation:
 
 excerpt_separator: <!--more-->
 words_per_minute: 180
+future: true # publish future posts as well
 
 # Build settings
 plugins:
