@@ -186,6 +186,11 @@ small {
 		margin: 0 0 2em 0;
 	}
 
+	.articlesubheader {
+		font-size: 70%;
+		margin: 0 0 0.7em 0;
+	}
+
 		p.content {
 			-moz-columns: 20em 2;
 			-webkit-columns: 20em 2;
