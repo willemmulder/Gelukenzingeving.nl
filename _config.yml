@@ -43,7 +43,7 @@ navigation:
   url: /contact
 
 excerpt_separator: <!--more-->
-words_per_minute: 180
+words_per_minute: 220
 future: true # publish future posts as well
 
 # Build settings
