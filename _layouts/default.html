@@ -59,7 +59,15 @@
 					<nav id="nav">
 						<ul>
 							{% for navigationpage in site.navigation %}
-								{% if page.url == navigationpage.url %}
+								{% assign navigationpageLength = navigationpage.url | size %}
+								{% assign truncatedPageURL = page.url | truncate: navigationpageLength, "" %}
+								{% if navigationpage.url != "/" and truncatedPageURL == navigationpage.url %}
+									{% assign nonIndexPageMatchesOnStart = true %}
+								{% else %}
+									{% assign nonIndexPageMatchesOnStart = false %}
+								{% endif %}
+
+								{% if nonIndexPageMatchesOnStart or navigationpage.url == page.url %}
 									<li><a href="{{navigationpage.url}}" class="active">{{navigationpage.label}}</a></li>
 								{% else %}
 									<li><a href="{{navigationpage.url}}">{{navigationpage.label}}</a></li>
