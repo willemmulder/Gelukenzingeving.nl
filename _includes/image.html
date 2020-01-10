@@ -1,11 +1,11 @@
 <div class="image fit">
     <a target="_blank" href="/images/{{include.src}}">
         {% if include.p_x  %}
-            <img src="/images/gele_cirkel_pijl_60px.png" {% if include.p_id %}id="pointer_{{include.p_id}}"{% endif %} style="position: absolute; z-index: 1; width: {{include.p_s}}%; left: {{include.p_x}}%; top: {{include.p_y}}%;">
+            <img src="/images/gele_cirkel_pijl_60px.png" alt="aanwijzer pijl" {% if include.p_id %}id="pointer_{{include.p_id}}"{% endif %} style="position: absolute; z-index: 1; width: {{include.p_s}}%; left: {{include.p_x}}%; top: {{include.p_y}}%;">
         {% endif %}
         {% if include.p1_x  %}
-            <img src="/images/gele_cirkel_1_60px.png" style="position: absolute; z-index: 1; width: {{include.p_s}}%; left: {{include.p1_x}}%; top: {{include.p1_y}}%;">
+            <img src="/images/gele_cirkel_1_60px.png" alt="aanwijzer cirkel" style="position: absolute; z-index: 1; width: {{include.p_s}}%; left: {{include.p1_x}}%; top: {{include.p1_y}}%;">
         {% endif %}
-        <img src="/images/{{include.src}}">
+        <img alt="{{include.alt}}" src="/images/{{include.src}}">
     </a>
 </div>
