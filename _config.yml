@@ -19,13 +19,19 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Geluk en zingeving
+tagline: Naar een gelukkiger samenleving
 email: informatie@gelukenzingeving.nl
 description: >- # this means to ignore newlines until "baseurl:"
-  Naar een gelukkiger samenleving.
+  Om zoveel mogelijk mensen in onze samenleving te helpen om geluk, vrede en zingeving te ervaren
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://gelukenzingeving.nl" # the base hostname & protocol for your site, e.g. http://example.com
+logo: /images/favicon_300px.png
+lang: nl_NL
 twitter_username: willemmulder
 github_username:  willemmulder
+facebook:
+  publisher: https://www.facebook.com/gelukenzingeving/
+
 navigation: 
 - label: Waarom
   url: /
@@ -50,6 +56,7 @@ future: true # publish future posts as well
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default.
