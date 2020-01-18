@@ -11,63 +11,76 @@ permalink: /blog
             <h2>Blog</h2>
         </header>
         <p>
-            Via artikelen schrijf ik regelmatig over geluk, zingeving en de samenleving. Als je hier nieuw bent zou ik je aanraden om met onderstaande artikelen te beginnen.
+            Deze blog bevat artikelen over geluk, zingeving en de samenleving. 
         </p>
-        <p>
-            {% include biglink.html label="Wat is geluk" link="/blog/wat-is-geluk" %}
-            {% include secondarybiglink.html label="Hoe kun je gelukkiger worden" link="/blog/hoe-kun-je-gelukkiger-worden" %}
-            {% include secondarybiglink.html label="Wat zijn emoties" link="/blog/wat-zijn-emoties" %}
-            {% include secondarybiglink.html label="Waar komen emoties vandaan" link="/blog/waar-komen-emoties-vandaan" %}
-            {% include secondarybiglink.html label="Wat te doen met emoties" link="/blog/wat-te-doen-met-emoties" %}
-            {% include secondarybiglink.html label="Het definitieve stappenplan om gelukkiger te worden" link="/blog/het-definitieve-stappenplan-om-gelukkiger-te-worden" %}
-            {% include secondarybiglink.html label="Streven versus tevredenheid" link="/blog/streven-versus-tevredenheid" %}
-        </p>
+        <div class="row gtr-uniform">
+            <div class="col-6 col-12-small">
+                <p>
+                    In onderstaande serie artikelen wordt uitgelegd wat geluk is, hoe geluk werkt en hoe je het geluk wat vaker tegen kunt komen.
+                </p>
+                <p>
+                    {% include biglink.html label="Wat is geluk" link="/blog/wat-is-geluk" %}
+                    {% include secondarybiglink.html label="Hoe kun je gelukkiger worden" link="/blog/hoe-kun-je-gelukkiger-worden" %}
+                    {% include secondarybiglink.html label="Wat zijn emoties" link="/blog/wat-zijn-emoties" %}
+                    {% include secondarybiglink.html label="Waar komen emoties vandaan" link="/blog/waar-komen-emoties-vandaan" %}
+                    {% include secondarybiglink.html label="Wat te doen met emoties" link="/blog/wat-te-doen-met-emoties" %}
+                    {% include secondarybiglink.html label="Het definitieve stappenplan om gelukkiger te worden" link="/blog/het-definitieve-stappenplan-om-gelukkiger-te-worden" %}
+                    {% include secondarybiglink.html label="Streven versus tevredenheid" link="/blog/streven-versus-tevredenheid" %}
+                </p>
+            </div>
+            <div class="col-6 col-12-small">
+                <p>
+                    Onderstaand het meest recente artikel.
+                    Als er een nieuwe blog wordt gepubliceerd, dan verschijnt deze hier.
+                </p>
+                <h3><a href="{{ site.posts.first.url }}">{{ site.posts.first.title }}</a></h3>
+                <p class="articlesubheader"> 
+                    {% include date.html date=site.posts.first.date %} - 
+                    {{ site.posts.first.author }} - 
+    
+                    {% assign readTime = site.posts.first.content | strip_html | number_of_words | divided_by:site.words_per_minute | round %}
+                    {% if readTime == 0 %}
+                    {% assign readTimeText = "Minder dan één" %}
+                    {% elsif readTime == 1 %}
+                    {% assign readTimeText = "Één" %}
+                    {% elsif readTime == 2 %}
+                    {% assign readTimeText = "Twee" %}
+                    {% elsif readTime == 3 %}
+                    {% assign readTimeText = "Drie" %}
+                    {% elsif readTime == 4 %}
+                    {% assign readTimeText = "Vier" %}
+                    {% elsif readTime == 5 %}
+                    {% assign readTimeText = "Vijf" %}
+                    {% elsif readTime == 6 %}
+                        {% assign readTimeText = "Zes" %}
+                    {% elsif readTime == 7 %}
+                    {% assign readTimeText = "Zeven" %}
+                    {% elsif readTime == 8 %}
+                    {% assign readTimeText = "Acht" %}
+                    {% elsif readTime == 9 %}
+                    {% assign readTimeText = "Negen" %}
+                    {% else %}
+                    {% assign readTimeText = readTime %}
+                    {% endif %}
+    
+                    {% if readTime <= 1 %}
+                    {{readTimeText}} minuut lezen
+                    {% else %}
+                    {{readTimeText}} minuten lezen
+                    {% endif %}
+                </p>
+                <p>
+                    {{ site.posts.first.excerpt | markdownify | strip_html }}
+                    <a href="{{site.posts.first.url}}">verder lezen...</a>     
+                </p>
+            </div>
+        </div>
         <hr/>
         <p>
-            <h3>Nieuwste artikel: <a href="{{ site.posts.first.url }}">{{ site.posts.first.title }}</a></h3>
-            <p class="articlesubheader"> 
-                {% include date.html date=site.posts.first.date %} - 
-                {{ site.posts.first.author }} - 
-
-                {% assign readTime = site.posts.first.content | strip_html | number_of_words | divided_by:site.words_per_minute | round %}
-                {% if readTime == 0 %}
-                {% assign readTimeText = "Minder dan één" %}
-                {% elsif readTime == 1 %}
-                {% assign readTimeText = "Één" %}
-                {% elsif readTime == 2 %}
-                {% assign readTimeText = "Twee" %}
-                {% elsif readTime == 3 %}
-                {% assign readTimeText = "Drie" %}
-                {% elsif readTime == 4 %}
-                {% assign readTimeText = "Vier" %}
-                {% elsif readTime == 5 %}
-                {% assign readTimeText = "Vijf" %}
-                {% elsif readTime == 6 %}
-                    {% assign readTimeText = "Zes" %}
-                {% elsif readTime == 7 %}
-                {% assign readTimeText = "Zeven" %}
-                {% elsif readTime == 8 %}
-                {% assign readTimeText = "Acht" %}
-                {% elsif readTime == 9 %}
-                {% assign readTimeText = "Negen" %}
-                {% else %}
-                {% assign readTimeText = readTime %}
-                {% endif %}
-
-                {% if readTime <= 1 %}
-                {{readTimeText}} minuut lezen
-                {% else %}
-                {{readTimeText}} minuten lezen
-                {% endif %}
-            </p>
-            <p>
-                {{ site.posts.first.excerpt | markdownify | strip_html }}
-                <a href="{{site.posts.first.url}}">verder lezen...</a>     
-            </p>
+            {% include biglink.html label="Klik hier om alle artikelen te bekijken" link="/blog/alle" %}
         </p>
-        <hr/>
         <p>
-            Je kunt verder <a href='/blog/alle'>alle artikelen hier vinden</a>. Ook is er een <a href='/feed.xml'>RSS feed</a>.
+            Ook is er een <a href='/feed.xml'>RSS feed</a> die je kunt gebruiken om via een <a href='https://feedly.com/'>RSS lezer</a> altijd op de hoogte te blijven van nieuwe artikelen.
         </p>
     </div>
 </section>
