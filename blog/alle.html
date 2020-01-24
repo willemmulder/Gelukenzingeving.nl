@@ -48,7 +48,7 @@ permalink: /blog/alle
                 {% endif %}
             </p>
             <p>
-                {{ post.excerpt | markdownify | strip_html }}
+                {{ post.content | split:'<!--excerpt-->' | last | split:'<!--/excerpt-->' | first | markdownify | strip_html }}
                 <a href="{{post.url}}">verder lezen...</a>     
             </p>
         {% endfor %}

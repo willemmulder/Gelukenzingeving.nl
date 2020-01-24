@@ -25,7 +25,7 @@
         {% assign readTimeText = readTime %}
 {% endcase %}
 
-{% if readTime <= 1 %}
+{% if readTime == 1 %}
     {{readTimeText}} minuut lezen
 {% else %}
     {{readTimeText}} minuten lezen

@@ -1,0 +1,15 @@
+<p>
+    In het kort: <em>{{ include.summary }}</em>
+</p>
+
+{% capture serie %}
+    <div class='button-group'>
+        {% assign pages = site.categories.serie_basis | sort:'date' %}
+        {% for post in pages %}
+        <div class='fit' style='margin-bottom: 0.5em;'>
+            <a href="{{ post.url }}" class="button {% if include.currentpage.url == post.url %}primary{% endif %} small">{{ post.title }}</a>
+        </div>
+        {% endfor %}
+    </div>
+{% endcapture %}
+{% include moreinfo.html buttonLabel="Deze blog is onderdeel van een serie" content=serie %}
