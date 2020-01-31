@@ -1,32 +1,30 @@
-{% assign readTime = include.text | strip_html | number_of_words | divided_by:site.words_per_minute | round %}
-
-{% case readTime %}
-    {% when 0 %}
-        {% assign readTimeText = "Minder dan één" %}
-    {% when 1 %}
-        {% assign readTimeText = "Één" %}
-    {% when 2 %}
-        {% assign readTimeText = "Twee" %}
-    {% when 3 %}
-        {% assign readTimeText = "Drie" %}
-    {% when 4 %}
-        {% assign readTimeText = "Vier" %}
-    {% when 5 %}
-        {% assign readTimeText = "Vijf" %}
-    {% when 6 %}
-        {% assign readTimeText = "Zes" %}
-    {% when 7 %}
-        {% assign readTimeText = "Zeven" %}
-    {% when 8 %}
-        {% assign readTimeText = "Acht" %}
-    {% when 9 %}
-        {% assign readTimeText = "Negen" %}
-    {% else %}
-        {% assign readTimeText = readTime %}
-{% endcase %}
-
-{% if readTime == 1 %}
+{%- assign readTime = include.text | strip_html | number_of_words | divided_by:site.words_per_minute | round -%}
+{%- case readTime -%}
+    {%- when 0 -%}
+        {%- assign readTimeText = "Minder dan één" -%}
+    {%- when 1 -%}
+        {%- assign readTimeText = "Één" -%}
+    {%- when 2 -%}
+        {%- assign readTimeText = "Twee" -%}
+    {%- when 3 -%}
+        {%- assign readTimeText = "Drie" -%}
+    {%- when 4 -%}
+        {%- assign readTimeText = "Vier" -%}
+    {%- when 5 -%}
+        {%- assign readTimeText = "Vijf" -%}
+    {%- when 6 -%}
+        {%- assign readTimeText = "Zes" -%}
+    {%- when 7 -%}
+        {%- assign readTimeText = "Zeven" -%}
+    {%- when 8 -%}
+        {%- assign readTimeText = "Acht" -%}
+    {%- when 9 -%}
+        {%- assign readTimeText = "Negen" -%}
+    {%- else -%}
+        {%- assign readTimeText = readTime -%}
+{%- endcase -%}
+{%- if readTime == 1 -%}
     {{readTimeText}} minuut lezen
-{% else %}
+{%- else -%}
     {{readTimeText}} minuten lezen
-{% endif %}
+{%- endif -%}

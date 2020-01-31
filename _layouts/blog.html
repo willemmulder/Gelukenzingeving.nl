@@ -10,11 +10,7 @@ layout: default
             <header class="major">
                 <h2>{{page.title}}</h2>
                 <p>
-                    
-                    {% include date.html date=page.date %} - 
-                    {{ page.author }} - 
-                    {% include readtime.html text=page.content %}
-
+                    {% include date.html date=page.date %} - {{ page.author }} - {% include readtime.html text=page.content %}
                     <span style='float: right;'>
                         <small>
                             Delen op 
