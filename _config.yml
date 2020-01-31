@@ -33,7 +33,7 @@ facebook:
   publisher: https://www.facebook.com/gelukenzingeving/
 
 navigation: 
-- label: Waarom
+- label: Welkom
   url: /
 - label: Jij
   url: /jij
