@@ -5,6 +5,64 @@ description: Kom meer te weten over jezelf en chat met een machine
 permalink: /chat
 ---
 
+<style>
+    #chatwrapper, #main, .main, #innerWrapper {
+        height: 100%;
+    }
+    #chatwrapper {
+        width: 100%;
+        max-width: none;
+        background: #eee;
+    }
+    #innerWrapper {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    #messagesWrapper {
+        border: 1px solid #eee;
+        padding: 10px;
+        overflow: auto;
+    }
+    #messages > div {
+        margin-bottom: 10px;
+        overflow: auto;
+    }
+    #messages > div.sent {
+        text-align: right;
+    }
+    #messages > div.received {
+        text-align: left;
+    }
+    #messages > div > span {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 5px;
+        background: #fff;
+        border: 1px solid #ccc;
+        overflow: hidden;
+        word-break: break-word;
+    }
+    #submitsWrapper { 
+        background: #fff;
+        padding: 10px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    #message {
+        background: #fff !important;
+    }
+    .button {
+        text-align: center !important;
+        margin-right: 10px;
+    }
+
+    #numberSubmitForm, #optionsSubmitForm {
+        display: none;
+    }
+</style>
+
 <!-- Introductie -->
 <section id="intro">
     <div class="content">
@@ -18,8 +76,256 @@ permalink: /chat
         <p>
             Het gesprek is volledig anoniem en aan het eind van het gesprek krijg je een aantal persoonlijke tips van je machine-vriend!
         </p>
-        <div class="row">
-            <iframe class="col-12" style="height: 600px;" src="https://gelukenzingeving-chatbot.herokuapp.com/"></iframe>
+        <div id="chatwrapper">
+            <div id="innerWrapper">
+                <div id="messagesWrapper">
+                    <div id="messages">
+                        
+                    </div>
+                </div>
+                <div id="submitsWrapper">
+                    <div id="submits">
+                        <form id="messageSubmitForm" class="submitForm" action="">
+                            <div class="row">
+                                <div style="flex-grow: 1;">
+                                    <input type="text" id="message" autocomplete="off" placeholder="Bericht" />
+                                </div>
+                                <div>
+                                    <input type="submit" class="button primary" value="Verstuur"/>
+                                </div>
+                            </div>
+                        </form>
+                        <form id="numberSubmitForm" class="submitForm" action="">
+                            <div class="row">
+                                <div style="flex-grow: 1;">
+                                    <input type="number" id="number" autocomplete="off" placeholder="1" />
+                                </div>
+                                <div>
+                                    <input type="submit" class="button primary" value="Verstuur"/>
+                                </div>
+                            </div>
+                        </form>
+                        <form id="optionsSubmitForm" class="submitForm" action="">
+                            <div class="row">
+                                <div class="options" style="flex-grow: 1;">
+                                    
+                                </div>
+                                <div>
+                                    <input type="submit" class="button primary" value="Verstuur"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+        <script>
+
+            let authenticated = false;
+
+            let onLoadFunction = function() {
+
+                // ==
+                // Init
+                // ==
+
+                var url = 'https://gelukenzingeving-chatbot.herokuapp.com/';
+                var socket = io(url);
+                socket.on('connect',function(res){
+                    // Load sessionId and authenticate
+                    let sessionId = localStorage.getItem('chat_sessionId');
+                    if (sessionId) {
+                        // Auth with existing sessionId
+                        socket.emit('config', JSON.stringify({'action':'authenticate','sessionId':sessionId}));
+                    } else {
+                        // Auth without sessionId
+                        socket.emit('config', JSON.stringify({'action':'authenticate'}));
+                    }
+                });
+
+                $('#message').focus();
+
+                // ==
+                // Handlers
+                // ==
+
+                socket.on('config', function(configString) {
+                    let config = JSON.parse(configString);
+                    // Handle
+                    if (config.event == 'authenticated') {
+                        localStorage.setItem('chat_sessionId', config.sessionId);
+                        authenticated = true;
+                    }
+                    // Add as message
+                    let msg = 'config: '+ JSON.stringify(config);
+                });
+
+                socket.on('message', function(messageString){
+                    let message = JSON.parse(messageString);
+                    indicateServerIsTypingAndThenAddMessageToScreen({
+                        outbound: false,
+                        message: message
+                    });
+                });
+
+                // ==
+                // Form submits
+                // ==
+
+                $('#configMessageSubmitForm').submit(function(e){
+                    e.preventDefault(); // prevents page reloading
+                    let msg = $('#configMessage').val();
+                    socket.emit('config', msg);
+                    addMessageToScreen({
+                        outbound: true,
+                        message: {
+                            text: msg
+                        }
+                    });
+                    //$('#m').val('');
+                    return false;
+                });
+                
+                $('#messageSubmitForm').submit(function(e){
+                    e.preventDefault(); // prevents page reloading
+                    if (authenticated) {
+                        let msg = $('#message').val();
+                        socket.emit('message', msg);
+                        addMessageToScreen({
+                            outbound: true,
+                            message: {
+                                text: msg
+                            }
+                        });
+                    }
+                    $('#message').val('');
+                    $('#message').focus();
+                    return false;
+                });
+
+                $('#numberSubmitForm').submit(function(e){
+                    e.preventDefault(); // prevents page reloading
+                    if (authenticated) {
+                        let msg = $('#number').val();
+                        socket.emit('message', msg);
+                        addMessageToScreen({
+                            outbound: true,
+                            message: {
+                                text: msg
+                            }
+                        });
+                    }
+                    $('#number').val('');
+                    $('#number').focus();
+                    return false;
+                });
+
+                $('#optionsSubmitForm').submit(function(e){
+                    e.preventDefault(); // prevents page reloading
+                    if (authenticated) {
+                        let msg;
+                        $('#optionsSubmitForm .selected').each(function(index, elm) {
+                            msg = $(elm).val();
+                        })
+                        if (!msg) {
+                            return;
+                        }
+                        socket.emit('message', msg);
+                        addMessageToScreen({
+                            outbound: true,
+                            message: {
+                                text: msg
+                            }
+                        });
+                    }
+                    return false;
+                });
+
+            }
+
+            function createConversationElement(message, outbound) {
+                return {
+                    message: message,
+                    outbound: outbound
+                }
+            }
+
+            function findTypingElement() {
+                return $('#messages').find('.typing');
+            }
+
+            function indicateServerIsTypingAndThenAddMessageToScreen(conversationElement) {
+                indicateServerIsTyping();
+                setTimeout(function() {
+                    addMessageToScreen(conversationElement);
+                }, 500);
+            }
+
+            function indicateServerIsTyping() {
+                // Check if there is not already a message element that indicates that the server is typing
+                let existingTypingElement = findTypingElement();
+                // If there is none, add one at the end and scroll to the end
+                if (existingTypingElement.length == 0) {
+                    let messageElement = createMessageElement('received typing', '...');
+                    $('#messages').append(messageElement);
+                    scrollToSubmitWrapper();
+                }
+            }
+
+            function addMessageToScreen(conversationElement) {
+                let ourClass = conversationElement.outbound ? 'sent' : 'received';
+                let messageElement = createMessageElement(ourClass, conversationElement.message.text);
+                // Find typing element, and replace it if we have an incoming message
+                let existingTypingElement = findTypingElement();
+                if (existingTypingElement.length > 0 && !conversationElement.outbound) {
+                    existingTypingElement.html(messageElement.html());
+                    existingTypingElement.removeClass('typing');
+                } else {
+                    $('#messages').append(messageElement);
+                }
+                // Set the correct reply options
+                if (conversationElement.outbound == false) {
+                    let expectedReplyType = 'freetext';
+                    if (conversationElement.message.expectedReplyType) {
+                        expectedReplyType = conversationElement.message.expectedReplyType;
+                    }
+                    $('.submitForm').hide();
+                    if (expectedReplyType == 'freetext') {
+                        $('#messageSubmitForm').show();
+                        $('#message').focus();
+                    } else if (expectedReplyType == 'number') {
+                        $('#numberSubmitForm').show();
+                        $('#number').focus();
+                    } else if (expectedReplyType == 'fixed options') {
+                        $('#optionsSubmitForm .options').html('');
+                        conversationElement.message.expectedReplyFixedOptions.forEach(function(choice) {
+                            $('#optionsSubmitForm .options').append($('<input type="button" class="button option secondary">').val(choice).click(function(e) {
+                                e.preventDefault(); // prevents page reloading
+                                $('#optionsSubmitForm .option').removeClass('selected primary');
+                                $(this).addClass('selected primary');
+                                return false;
+                            }));
+                        })
+                        $('#optionsSubmitForm').show();
+                    }
+                }
+                // Scroll
+                scrollToSubmitWrapper();
+            }
+
+            function createMessageElement(ourClass, html) {
+                let message = $('<div class="' + ourClass + '">');
+                message.append($('<span>').html(html));
+                return message;
+            }
+
+            function scrollToSubmitWrapper() {
+                $("html").animate({
+                    scrollTop: ($('#submitsWrapper')[0].offsetTop - $(window).height() + $('#submitsWrapper').outerHeight())
+                }, 50);
+            }
+            
+        </script>
     </div>
 </section>
