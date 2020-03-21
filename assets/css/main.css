@@ -2513,6 +2513,10 @@ small {
 			vertical-align: middle;
 		}
 
+		ul.actions li:before {
+			content: none;
+		}
+
 		ul.actions.special {
 			-moz-justify-content: center;
 			-webkit-justify-content: center;
@@ -2628,6 +2632,10 @@ small {
 		ul.icons li {
 			display: inline-block;
 			padding: 0 0.65em 0 0;
+		}
+
+		ul.icons li:before {
+			content: none;
 		}
 
 			ul.icons li:last-child {
@@ -2824,6 +2832,10 @@ small {
 			padding: 0;
 		}
 
+		.features li:before {
+			content: none;
+		}
+
 			.features li:nth-child(1), .features li:nth-child(2), .features li:nth-child(3) {
 				margin-top: 0;
 			}
@@ -2885,6 +2897,10 @@ small {
 			padding: 1.5em;
 			color: #ffffff;
 			text-align: center;
+		}
+
+		.statistics li:before {
+			content: none;
 		}
 
 			.statistics li.style1 {
