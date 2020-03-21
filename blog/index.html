@@ -21,7 +21,11 @@ permalink: /blog
                 <p>
                     {% assign pages = site.categories.serie_basis | sort:'date' %}
                     {% for post in pages %}
-                        {% include secondarybiglink.html label=post.title link=post.url %}
+                        {% if pages.first.url == post.url %}
+                            {% include biglink.html label=post.title link=post.url %}
+                        {% else %}
+                            {% include secondarybiglink.html label=post.title link=post.url %}
+                        {% endif %}
                     {% endfor %}
                 </p>
             </div>
@@ -37,33 +41,33 @@ permalink: /blog
     
                     {% assign readTime = site.posts.first.content | strip_html | number_of_words | divided_by:site.words_per_minute | round %}
                     {% if readTime == 0 %}
-                    {% assign readTimeText = "Minder dan één" %}
+                        {% assign readTimeText = "Minder dan één" %}
                     {% elsif readTime == 1 %}
-                    {% assign readTimeText = "Één" %}
+                        {% assign readTimeText = "Één" %}
                     {% elsif readTime == 2 %}
-                    {% assign readTimeText = "Twee" %}
+                        {% assign readTimeText = "Twee" %}
                     {% elsif readTime == 3 %}
-                    {% assign readTimeText = "Drie" %}
+                        {% assign readTimeText = "Drie" %}
                     {% elsif readTime == 4 %}
-                    {% assign readTimeText = "Vier" %}
+                        {% assign readTimeText = "Vier" %}
                     {% elsif readTime == 5 %}
-                    {% assign readTimeText = "Vijf" %}
+                        {% assign readTimeText = "Vijf" %}
                     {% elsif readTime == 6 %}
                         {% assign readTimeText = "Zes" %}
                     {% elsif readTime == 7 %}
-                    {% assign readTimeText = "Zeven" %}
+                        {% assign readTimeText = "Zeven" %}
                     {% elsif readTime == 8 %}
-                    {% assign readTimeText = "Acht" %}
+                        {% assign readTimeText = "Acht" %}
                     {% elsif readTime == 9 %}
-                    {% assign readTimeText = "Negen" %}
+                        {% assign readTimeText = "Negen" %}
                     {% else %}
-                    {% assign readTimeText = readTime %}
+                        {% assign readTimeText = readTime %}
                     {% endif %}
     
                     {% if readTime <= 1 %}
-                    {{readTimeText}} minuut lezen
+                        {{readTimeText}} minuut lezen
                     {% else %}
-                    {{readTimeText}} minuten lezen
+                        {{readTimeText}} minuten lezen
                     {% endif %}
                 </p>
                 <p>
@@ -74,7 +78,7 @@ permalink: /blog
         </div>
         <hr/>
         <p>
-            {% include biglink.html label="Klik hier om alle artikelen te bekijken" link="/blog/alle" %}
+            {% include secondarybiglink.html label="Klik hier om alle artikelen te bekijken" link="/blog/alle" %}
         </p>
         <p>
             Ook is er een <a href='/feed.xml'>RSS feed</a> die je kunt gebruiken om via een <a href='https://feedly.com/'>RSS lezer</a> altijd op de hoogte te blijven van nieuwe artikelen.
