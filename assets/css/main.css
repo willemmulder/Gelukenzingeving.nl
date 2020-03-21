@@ -2420,13 +2420,24 @@ small {
 		}
 
 	ul {
-		list-style: disc;
+		list-style: none;
 		margin: 0 0 2em 0;
 		padding-left: 1em;
 	}
 
 		ul li {
 			padding-left: 0.5em;
+		}
+		ul li:before{ 
+			content:''; 
+			display:inline-block; 
+			height:1em; 
+			width:1em; 
+			margin-right:1em;
+			vertical-align: middle;
+			background-image:url(/images/gele_cirkel_60px.png); 
+			background-size:contain; 
+			background-repeat:no-repeat; 
 		}
 
 		ul.alt {
@@ -3269,6 +3280,10 @@ small {
 				margin: 0 0.35em;
 				padding: 0;
 				vertical-align: middle;
+			}
+
+			#nav ul li:before {
+				content: none;
 			}
 
 				#nav ul li a {
