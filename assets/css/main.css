@@ -2010,6 +2010,7 @@ small {
 
 	input[type="text"],
 	input[type="number"],
+	input[type="range"],
 	input[type="password"],
 	input[type="email"],
 	select,
@@ -2030,6 +2031,7 @@ small {
 
 		input[type="text"]:invalid,
 		input[type="number"]:invalid,
+		input[type="range"]:invalid,
 		input[type="password"]:invalid,
 		input[type="email"]:invalid,
 		select:invalid,
@@ -2060,6 +2062,33 @@ small {
 	input[type="email"],
 	select {
 		height: 2.75em;
+	}
+
+	input[type="range"] {
+		height: 1.75em;
+		margin-top: 0.5em;
+		margin-bottom: 0.5em;
+		padding: 0px;
+	}
+
+	input[type="range"]::-webkit-slider-thumb {
+		-webkit-appearance: none; /* Override default look */
+		appearance: none;
+		width: 2em; /* Set a specific slider handle width */
+		height: 2em; /* Slider handle height */
+		border-radius: 1em;
+		background: #7a67ab !important;
+		cursor: pointer; /* Cursor on hover */
+	}
+
+	input[type="range"]::-moz-range-thumb {
+		-webkit-appearance: none; /* Override default look */
+		appearance: none;
+		width: 2em; /* Set a specific slider handle width */
+		height: 2em; /* Slider handle height */
+		border-radius: 1em;
+		background: #7a67ab !important;
+		cursor: pointer; /* Cursor on hover */
 	}
 
 	textarea {
@@ -2152,6 +2181,7 @@ small {
 
 	input[type="text"],
 	input[type="number"],
+	input[type="range"],
 	input[type="password"],
 	input[type="email"],
 	select,
@@ -2162,6 +2192,7 @@ small {
 
 		input[type="text"]:focus,
 		input[type="number"]:focus,
+		input[type="range"]:focus,
 		input[type="password"]:focus,
 		input[type="email"]:focus,
 		select:focus,
@@ -3470,6 +3501,7 @@ small {
 
 		#main input[type="text"],
 		#main input[type="number"],
+		#main input[type="range"],
 		#main input[type="password"],
 		#main input[type="email"],
 		#main select,
@@ -3480,6 +3512,7 @@ small {
 
 			#main input[type="text"]:focus,
 			#main input[type="number"]:focus,
+			#main input[type="range"]:focus,
 			#main input[type="password"]:focus,
 			#main input[type="email"]:focus,
 			#main select:focus,
