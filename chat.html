@@ -58,8 +58,15 @@ permalink: /chat
         margin-right: 10px;
     }
 
-    #numberSubmitForm, #optionsSubmitForm {
+    #numberInRangeSubmitForm, #numberSubmitForm, #optionsSubmitForm {
         display: none;
+    }
+
+    #minrangetext {
+        padding-left: 2em;
+    }
+    #minrangetext, #maxrangetext {
+        line-height: 2.75em;
     }
 </style>
 
@@ -89,6 +96,22 @@ permalink: /chat
                             <div class="row">
                                 <div style="flex-grow: 1;">
                                     <input type="text" id="message" autocomplete="off" placeholder="Bericht" />
+                                </div>
+                                <div>
+                                    <input type="submit" class="button primary" value="Verstuur"/>
+                                </div>
+                            </div>
+                        </form>
+                        <form id="numberInRangeSubmitForm" class="submitForm" action="">
+                            <div class="row">
+                                <div id="minrangetext">
+
+                                </div>
+                                <div style="flex-grow: 1;">
+                                    <input type="range" min="1" max="100" id="numberinrange" autocomplete="off" placeholder="1" />
+                                </div>
+                                <div id="maxrangetext">
+
                                 </div>
                                 <div>
                                     <input type="submit" class="button primary" value="Verstuur"/>
@@ -190,12 +213,17 @@ permalink: /chat
                 $('#messageSubmitForm').submit(function(e){
                     e.preventDefault(); // prevents page reloading
                     if (authenticated) {
-                        let msg = $('#message').val();
-                        socket.emit('message', msg);
+                        let value;
+                        let text = $('#message').val();
+                        socket.emit('message', {
+                            value: value,
+                            text: text
+                        });
                         addMessageToScreen({
                             outbound: true,
                             message: {
-                                text: msg
+                                value: value,
+                                text: text
                             }
                         });
                     }
@@ -204,15 +232,47 @@ permalink: /chat
                     return false;
                 });
 
-                $('#numberSubmitForm').submit(function(e){
+                $('#numberInRangeSubmitForm').submit(function(e){
                     e.preventDefault(); // prevents page reloading
                     if (authenticated) {
-                        let msg = $('#number').val();
-                        socket.emit('message', msg);
+                        let min = $('#numberinrange').attr('min');
+                        let max = $('#numberinrange').attr('max');
+                        let minrangetext = $('#minrangetext').text();
+                        let maxrangetext = $('#maxrangetext').text();
+                        let value = $('#numberinrange').val() * 1;
+                        let text = $('#numberinrange').val() + ' op een schaal van ' + max;
+                        let normalizedValue = (value - min) / (max - min);
+                        socket.emit('message', {
+                            value: value,
+                            text: text
+                        });
                         addMessageToScreen({
                             outbound: true,
                             message: {
-                                text: msg
+                                value: value,
+                                text: text
+                            }
+                        });
+                    }
+                    $('#numberinrange').val('');
+                    $('#numberinrange').focus();
+                    return false;
+                });
+
+                $('#numberSubmitForm').submit(function(e){
+                    e.preventDefault(); // prevents page reloading
+                    if (authenticated) {
+                        let value = $('#number').val();
+                        let text = $('#number').val();
+                        socket.emit('message', {
+                            value: value,
+                            text: text
+                        });
+                        addMessageToScreen({
+                            outbound: true,
+                            message: {
+                                value: value,
+                                text: text
                             }
                         });
                     }
@@ -224,106 +284,129 @@ permalink: /chat
                 $('#optionsSubmitForm').submit(function(e){
                     e.preventDefault(); // prevents page reloading
                     if (authenticated) {
-                        let msg;
+                        let value;
+                        let text;
                         $('#optionsSubmitForm .selected').each(function(index, elm) {
-                            msg = $(elm).val();
+                            value = $(elm).data('key');
+                            text = $(elm).val();
                         })
-                        if (!msg) {
+                        if (!text) {
                             return;
                         }
-                        socket.emit('message', msg);
+                        socket.emit('message', {
+                            value: value,
+                            text: text
+                        });
                         addMessageToScreen({
                             outbound: true,
                             message: {
-                                text: msg
+                                value: value,
+                                text: text
                             }
                         });
                     }
                     return false;
                 });
 
-            }
-
-            function createConversationElement(message, outbound) {
-                return {
-                    message: message,
-                    outbound: outbound
-                }
-            }
-
-            function findTypingElement() {
-                return $('#messages').find('.typing');
-            }
-
-            function indicateServerIsTypingAndThenAddMessageToScreen(conversationElement) {
-                indicateServerIsTyping();
-                setTimeout(function() {
-                    addMessageToScreen(conversationElement);
-                }, 500);
-            }
-
-            function indicateServerIsTyping() {
-                // Check if there is not already a message element that indicates that the server is typing
-                let existingTypingElement = findTypingElement();
-                // If there is none, add one at the end and scroll to the end
-                if (existingTypingElement.length == 0) {
-                    let messageElement = createMessageElement('received typing', '...');
-                    $('#messages').append(messageElement);
-                    scrollToSubmitWrapper();
-                }
-            }
-
-            function addMessageToScreen(conversationElement) {
-                let ourClass = conversationElement.outbound ? 'sent' : 'received';
-                let messageElement = createMessageElement(ourClass, conversationElement.message.text);
-                // Find typing element, and replace it if we have an incoming message
-                let existingTypingElement = findTypingElement();
-                if (existingTypingElement.length > 0 && !conversationElement.outbound) {
-                    existingTypingElement.html(messageElement.html());
-                    existingTypingElement.removeClass('typing');
-                } else {
-                    $('#messages').append(messageElement);
-                }
-                // Set the correct reply options
-                if (conversationElement.outbound == false) {
-                    let expectedReplyType = 'freetext';
-                    if (conversationElement.message.expectedReplyType) {
-                        expectedReplyType = conversationElement.message.expectedReplyType;
-                    }
-                    $('.submitForm').hide();
-                    if (expectedReplyType == 'freetext') {
-                        $('#messageSubmitForm').show();
-                        $('#message').focus();
-                    } else if (expectedReplyType == 'number') {
-                        $('#numberSubmitForm').show();
-                        $('#number').focus();
-                    } else if (expectedReplyType == 'fixed options') {
-                        $('#optionsSubmitForm .options').html('');
-                        conversationElement.message.expectedReplyFixedOptions.forEach(function(choice) {
-                            $('#optionsSubmitForm .options').append($('<input type="button" class="button option secondary">').val(choice).click(function(e) {
-                                e.preventDefault(); // prevents page reloading
-                                $('#optionsSubmitForm .option').removeClass('selected primary');
-                                $(this).addClass('selected primary');
-                                return false;
-                            }));
-                        })
-                        $('#optionsSubmitForm').show();
+                function createConversationElement(message, outbound) {
+                    return {
+                        message: message,
+                        outbound: outbound
                     }
                 }
-                // Scroll
-                scrollToSubmitWrapper();
-            }
 
-            function createMessageElement(ourClass, html) {
-                let message = $('<div class="' + ourClass + '">');
-                message.append($('<span>').html(html));
-                return message;
-            }
+                function findTypingElement() {
+                    return $('#messages').find('.typing');
+                }
 
-            function scrollToSubmitWrapper() {
-                $("html").animate({
-                    scrollTop: ($('#submitsWrapper')[0].offsetTop - $(window).height() + $('#submitsWrapper').outerHeight())
-                }, 50);
+                function indicateServerIsTypingAndThenAddMessageToScreen(conversationElement) {
+                    indicateServerIsTyping();
+                    setTimeout(function() {
+                        addMessageToScreen(conversationElement);
+                    }, 500);
+                }
+
+                function indicateServerIsTyping() {
+                    // Check if there is not already a message element that indicates that the server is typing
+                    let existingTypingElement = findTypingElement();
+                    // If there is none, add one at the end and scroll to the end
+                    if (existingTypingElement.length == 0) {
+                        let messageElement = createMessageElement('received typing', '...');
+                        $('#messages').append(messageElement);
+                        scrollProperly();
+                    }
+                }
+
+                function addMessageToScreen(conversationElement) {
+                    console.log(conversationElement);
+                    let ourClass = conversationElement.outbound ? 'sent' : 'received';
+                    let messageElement = createMessageElement(ourClass, conversationElement.message.text);
+                    // Find typing element, and replace it if we have an incoming message
+                    let existingTypingElement = findTypingElement();
+                    if (existingTypingElement.length > 0 && !conversationElement.outbound) {
+                        existingTypingElement.html(messageElement.html());
+                        existingTypingElement.removeClass('typing');
+                    } else {
+                        $('#messages').append(messageElement);
+                    }
+                    // Scroll
+                    scrollProperly();
+                    // Set the correct reply options
+                    if (conversationElement.outbound == false) {
+                        let expectedReplyType = 'freetext';
+                        if (conversationElement.message.expectedReplyType) {
+                            expectedReplyType = conversationElement.message.expectedReplyType;
+                        }
+                        $('.submitForm').hide();
+                        console.log(expectedReplyType);
+                        if (expectedReplyType == 'freetext') {
+                            $('#messageSubmitForm').show();
+                            $('#message').focus();
+                        } else if (expectedReplyType == 'number in range') {
+                            let minRangeDetails = conversationElement.message.expectedReplyOptions[0];
+                            let maxRangeDetails = conversationElement.message.expectedReplyOptions[1];
+                            console.log(minRangeDetails);
+                            console.log(maxRangeDetails);
+                            let minRange = minRangeDetails[0] || 0;
+                            let minRangeText = minRangeDetails[1] || '';
+                            let maxRange = maxRangeDetails[0] || 100;
+                            let maxRangeText = maxRangeDetails[1] || '';
+                            $('#numberInRangeSubmitForm').show();
+                            $('#minrangetext').text(minRangeText);
+                            $('#maxrangetext').text(maxRangeText);
+                            $('#numberinrange').attr('min',minRange).attr('max',maxRange).focus();
+                        } else if (expectedReplyType == 'number') {
+                            $('#numberSubmitForm').show();
+                            $('#number').focus();
+                        } else if (expectedReplyType == 'fixed options') {
+                            $('#optionsSubmitForm .options').html('');
+                            conversationElement.message.expectedReplyOptions.forEach(function(choice) {
+                                let key = choice[0];
+                                let label = choice[1];
+                                $('#optionsSubmitForm .options').append($('<input type="button" class="button option secondary" data-key="' + key + '">').val(label).click(function(e) {
+                                    e.preventDefault(); // prevents page reloading
+                                    $('#optionsSubmitForm .option').removeClass('selected primary');
+                                    $(this).addClass('selected primary');
+                                    return false;
+                                }));
+                            })
+                            $('#optionsSubmitForm').show();
+                        }
+                    }
+                }
+
+                function createMessageElement(ourClass, html) {
+                    let message = $('<div class="' + ourClass + '">');
+                    message.append($('<span>').html(html));
+                    return message;
+                }
+
+                function scrollProperly() {
+                    $("html").animate({
+                        scrollTop: ($('#submitsWrapper')[0].offsetTop - $(window).height() + $('#submitsWrapper').outerHeight())
+                    }, 50);
+                }
+
             }
             
         </script>
