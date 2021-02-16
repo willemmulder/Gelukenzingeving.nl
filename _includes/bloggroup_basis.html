@@ -1,6 +1,4 @@
-<p>
-    In het kort: <em>{{ include.summary }}</em>
-</p>
+{% include summary.html summary=include.summary %}
 
 {% capture serie %}
     <div class='button-group'>
