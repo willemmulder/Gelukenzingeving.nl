@@ -71,7 +71,7 @@ permalink: /blog
                     {% endif %}
                 </p>
                 <p>
-                    {{ site.posts.first.content | split:'<!--excerpt-->' | last | split:'<!--/excerpt-->' | first | markdownify | strip_html }}
+                    {{ site.posts.first.content | split:'<!--excerpt-->' | last | split:'<!--/excerpt-->' | first | strip_html }}
                     <a href="{{site.posts.first.url}}">verder lezen...</a>     
                 </p>
             </div>
